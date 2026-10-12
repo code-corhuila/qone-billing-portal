@@ -1,5 +1,11 @@
-import type { RequestHandler } from "msw";
+import { http, HttpResponse } from "msw";
+import type { Msw } from "../msw";
 
-// The MSW handlers of the billing portal (BI-01..BI-06), added with the screens that use them;
-// fixtures are the seed of qone-billing-db (06-data) validated against the contract.
-export const handlers: RequestHandler[] = [];
+// Every handler of the billing portal, built with the given msw primitives (ADR-009):
+// BI-01..BI-06, added with the screens that use them.
+export function createHandlers(_msw: Msw) {
+  return [];
+}
+
+/** The handlers for this portal's own tests (Node server in src/mocks/server.ts). */
+export const handlers = createHandlers({ http, HttpResponse });

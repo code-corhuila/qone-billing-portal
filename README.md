@@ -9,7 +9,7 @@ Governance and documentation live in [`qone-docs`](https://github.com/code-corhu
 
 The web portal of the **billing** domain (course norm 5.4, Annex H): the term invoice of a
 student and its simulated payment, and the admin's invoice issue. It is a Module Federation
-**remote** named `billing` that exposes `./App`; `qone-front` mounts it at `/billing/*`. The
+**remote** named `billing` that exposes `./App` (and `./mocks` for synthetic data); `qone-front` mounts it at `/billing/*`. The
 portal owns only its screens: the HTTP client and the session come from the shell and the
 portal never knows the gateway URL or the token (norm 5.4.1, verified on the built bundle by
 `scripts/check-isolation.sh`). Money travels as integer cents and is parsed from the text the
@@ -36,6 +36,8 @@ npm test                    # Vitest + Testing Library + MSW; contract tests aga
 npm run build               # remoteEntry.js and assets in dist/
 npm run check:isolation     # no gateway URL, no token handling, no raw fetch in dist/
 ```
+
+`npm run contracts:sync [ref]` refreshes the contract copies in `contracts/openapi/` from `qone-docs`.
 
 ## Dependencies
 
