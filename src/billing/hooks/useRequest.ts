@@ -38,6 +38,8 @@ export interface ApiFailure {
   status?: number;
   code?: string;
   traceId?: string;
+  /** The message of the error envelope, meant for the person on business rules (422). */
+  serverMessage?: string;
 }
 
 export function failureOf(error: Error): ApiFailure {
