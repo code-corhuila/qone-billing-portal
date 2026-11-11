@@ -14,15 +14,15 @@ const renderPage = () =>
       <MyInvoicePage />
     </MemoryRouter>,
   );
-const asLaura = () => testSession.signInAs({ id: billingFixtures.students.laura.id, role: "STUDENT", name: "Laura Gómez" });
-const asSantiago = () => testSession.signInAs({ id: billingFixtures.students.santiago.id, role: "STUDENT", name: "Santiago Rojas" });
+const asStudent01 = () => testSession.signInAs({ id: billingFixtures.students.student01.id, role: "STUDENT", name: "Estudiante Demo 01" });
+const asStudent02 = () => testSession.signInAs({ id: billingFixtures.students.student02.id, role: "STUDENT", name: "Estudiante Demo 02" });
 beforeEach(() => resetBilling());
 
 // HU-BIL-001: the term invoice and the simulated payment (BI-02, BI-05). Annex H: money shown
 // from integer cents, button disabled while pending, four states.
 describe("MyInvoicePage", () => {
   it("shows a paid invoice with its amount in COP, the provider reference and no pay button", async () => {
-    asLaura();
+    asStudent01();
     renderPage();
     expect(screen.getByRole("status")).toHaveTextContent("Loading your invoice");
 
@@ -36,7 +36,7 @@ describe("MyInvoicePage", () => {
 
   it("pays a pending invoice with the simulated provider and shows the confirmation", async () => {
     const user = userEvent.setup();
-    asSantiago();
+    asStudent02();
     renderPage();
     const card = await screen.findByRole("region", { name: "Invoice 2026-B" });
     expect(card).toHaveTextContent("Pending payment");
@@ -50,7 +50,7 @@ describe("MyInvoicePage", () => {
 
   it("disables the pay button while the payment is pending", async () => {
     const user = userEvent.setup();
-    asSantiago();
+    asStudent02();
     let release!: () => void;
     server.use(http.post("*/api/v1/billing/invoices/:id/pay", async () => { await new Promise<void>((r) => { release = r; }); return HttpResponse.json({ ...billingFixtures.invoices[1]!, status: "PAID", providerReference: "SIM-X", paidAt: "2026-10-12T00:00:00Z" }); }));
     renderPage();
@@ -67,7 +67,7 @@ describe("MyInvoicePage", () => {
     expect(await screen.findByText("No invoice has been issued to you for 2026-B.")).toBeInTheDocument();
     unmount();
 
-    asLaura();
+    asStudent01();
     server.use(http.get("*/api/v1/billing/invoices/me", () => HttpResponse.json({ error: "INTERNAL_ERROR", message: "x", traceId: "t-i1" }, { status: 500 }), { once: true }));
     renderPage();
     const alert = await screen.findByRole("alert");
@@ -77,7 +77,7 @@ describe("MyInvoicePage", () => {
   });
 
   it("shows the permission notice to a professor", () => {
-    testSession.signInAs({ id: "22222222-2222-4222-8222-222222222221", role: "PROFESSOR", name: "Carlos Ramírez" });
+    testSession.signInAs({ id: "22222222-2222-4222-8222-222222222221", role: "PROFESSOR", name: "Profesor Demo 01" });
     renderPage();
     expect(screen.getByRole("alert")).toHaveTextContent("You do not have permission for this section.");
   });

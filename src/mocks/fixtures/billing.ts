@@ -2,7 +2,7 @@ import { CURRENT_TERM, type Invoice, type Page } from "../../billing/model/billi
 
 // Synthetic data of the billing domain (ADR-009): the term invoices of the five students of
 // the prototype seed, the same people and ids as the identity and enrollment fixtures.
-// Santiago's invoice is ISSUED (the tuition gate demo); the rest are PAID. Amounts are COP cents.
+// Estudiante Demo 02's invoice is ISSUED (the tuition gate demo); the rest are PAID. Amounts are COP cents.
 
 const issuedAt = "2026-08-01T12:00:00Z";
 const paidAt = "2026-08-10T15:30:00Z";
@@ -23,19 +23,19 @@ function invoice(n: number, studentId: string, studentName: string, status: Invo
 }
 
 export const students = {
-  laura: { id: "11111111-1111-4111-8111-111111111111", name: "Laura Gómez" },
-  santiago: { id: "11111111-1111-4111-8111-111111111112", name: "Santiago Rojas" },
-  maria: { id: "11111111-1111-4111-8111-111111111113", name: "María José Cabrera" },
-  andres: { id: "11111111-1111-4111-8111-111111111114", name: "Andrés Pineda" },
-  valentina: { id: "11111111-1111-4111-8111-111111111115", name: "Valentina Suárez" },
+  student01: { id: "11111111-1111-4111-8111-111111111111", name: "Estudiante Demo 01" },
+  student02: { id: "11111111-1111-4111-8111-111111111112", name: "Estudiante Demo 02" },
+  student03: { id: "11111111-1111-4111-8111-111111111113", name: "Estudiante Demo 03" },
+  student04: { id: "11111111-1111-4111-8111-111111111114", name: "Estudiante Demo 04" },
+  student05: { id: "11111111-1111-4111-8111-111111111115", name: "Estudiante Demo 05" },
 } as const;
 
 export const invoices: Invoice[] = [
-  invoice(1, students.laura.id, students.laura.name, "PAID"),
-  invoice(2, students.santiago.id, students.santiago.name, "ISSUED"),
-  invoice(3, students.maria.id, students.maria.name, "PAID"),
-  invoice(4, students.andres.id, students.andres.name, "PAID"),
-  invoice(5, students.valentina.id, students.valentina.name, "PAID"),
+  invoice(1, students.student01.id, students.student01.name, "PAID"),
+  invoice(2, students.student02.id, students.student02.name, "ISSUED"),
+  invoice(3, students.student03.id, students.student03.name, "PAID"),
+  invoice(4, students.student04.id, students.student04.name, "PAID"),
+  invoice(5, students.student05.id, students.student05.name, "PAID"),
 ];
 
 export function paginate<T>(rows: readonly T[], page: number, limit: number): Page<T> {
