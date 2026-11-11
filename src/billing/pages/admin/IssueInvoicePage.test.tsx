@@ -14,7 +14,7 @@ const renderPage = () =>
       <IssueInvoicePage />
     </MemoryRouter>,
   );
-const asAdmin = () => testSession.signInAs({ id: "33333333-3333-4333-8333-333333333331", role: "ADMIN", name: "Patricia Mora" });
+const asAdmin = () => testSession.signInAs({ id: "33333333-3333-4333-8333-333333333331", role: "ADMIN", name: "Administrador" });
 beforeEach(() => resetBilling());
 
 async function fillValid(user: ReturnType<typeof userEvent.setup>) {
@@ -72,8 +72,8 @@ describe("IssueInvoicePage", () => {
     const user = userEvent.setup();
     asAdmin();
     renderPage();
-    await user.type(screen.getByLabelText("Student id"), billingFixtures.students.laura.id);
-    await user.type(screen.getByLabelText("Student name"), "Laura Gómez");
+    await user.type(screen.getByLabelText("Student id"), billingFixtures.students.student01.id);
+    await user.type(screen.getByLabelText("Student name"), "Estudiante Demo 01");
     await user.clear(screen.getByLabelText("Amount (COP)"));
     await user.type(screen.getByLabelText("Amount (COP)"), "1850000");
 
@@ -83,7 +83,7 @@ describe("IssueInvoicePage", () => {
   });
 
   it("shows the permission notice to a student", () => {
-    testSession.signInAs({ id: billingFixtures.students.laura.id, role: "STUDENT", name: "Laura Gómez" });
+    testSession.signInAs({ id: billingFixtures.students.student01.id, role: "STUDENT", name: "Estudiante Demo 01" });
     renderPage();
     expect(screen.getByRole("alert")).toHaveTextContent("You do not have permission for this section.");
   });

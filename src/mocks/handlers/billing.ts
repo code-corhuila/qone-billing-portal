@@ -88,7 +88,7 @@ export function billingHandlers({ http, HttpResponse }: Msw) {
   ];
 }
 
-/** Test support: the seed again (every student as the fixtures describe them, Santiago unpaid). */
+/** Test support: the seed again (every student as the fixtures describe them, Estudiante Demo 02 unpaid). */
 export function resetBilling(): void {
   invoices = seed.map((i) => ({ ...i }));
   byKey.clear();
