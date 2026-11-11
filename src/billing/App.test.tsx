@@ -17,7 +17,7 @@ const renderAt = (path: string) =>
 // its screen of HU-BIL-001.
 describe("billing App", () => {
   it("sends a student from the index to the invoice screen", async () => {
-    testSession.signInAs({ id: billingFixtures.students.laura.id, role: "STUDENT", name: "Laura Gómez" });
+    testSession.signInAs({ id: billingFixtures.students.student01.id, role: "STUDENT", name: "Estudiante Demo 01" });
     renderAt("/billing");
 
     expect(screen.getByRole("heading", { level: 2, name: "Billing" })).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("billing App", () => {
   });
 
   it("sends an admin from the index to the issue form", () => {
-    testSession.signInAs({ id: "33333333-3333-4333-8333-333333333331", role: "ADMIN", name: "Patricia Mora" });
+    testSession.signInAs({ id: "33333333-3333-4333-8333-333333333331", role: "ADMIN", name: "Administrador" });
     renderAt("/billing");
 
     expect(screen.getByRole("link", { name: "Issue invoice" })).toHaveAttribute("href", "/billing/admin/invoices/new");
@@ -34,7 +34,7 @@ describe("billing App", () => {
   });
 
   it("answers an unknown route inside the mount with its own not found", () => {
-    testSession.signInAs({ id: billingFixtures.students.laura.id, role: "STUDENT", name: "Laura Gómez" });
+    testSession.signInAs({ id: billingFixtures.students.student01.id, role: "STUDENT", name: "Estudiante Demo 01" });
     renderAt("/billing/anything");
     expect(screen.getByText("Not found")).toBeInTheDocument();
   });
